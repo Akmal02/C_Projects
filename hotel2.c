@@ -87,10 +87,10 @@ char heart[7][12] = {
 // Move cursor to the desired coordinate (x, y)
 // where (0, 0) is the top left corner
 // Like a graph paper, but with inverted y-axis
-//   (0, 0)  *-----------------------------*  (20, 0)
-//           |                             |
-//           |                             |
-//           |                             |
+//   (0, 0)  *--------------------------------------*  (20, 0)
+//           |  Press any key to continue._     |
+//           |                                      |
+//           |                                    |
 //   (0, 5)  *-----------------------------*  (20, 5)
 
 void gotoxy(int x, int y)
