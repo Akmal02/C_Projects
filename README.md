@@ -3,6 +3,6 @@ A collection of small C programs built for Windows.
 
 Included are...
 
-* **hotel2.c** : A demo of online hotel reservation system.
+* [**hotel2.c**](https://github.com/Akmal02/C_Projects/blob/master/hotel2.c A demo of online hotel reservation system.
 
-All are free to use.
+Use it properly and legally.
