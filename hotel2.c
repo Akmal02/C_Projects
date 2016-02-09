@@ -1,17 +1,40 @@
+/*
+ *     HOTEL RESEEVATION SYSTEM
+ *     © 2016
+ *
+ */
+
+
+
+
 #include <stdio.h>
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
 
-
 #define ARROWR 26
 #define ARROWL 27
 
+
+/*  Printing involves three functions:
+ *  (This is much fancier than printf() with lots of \n's)
+ * 
+ *    - setcolor() changes the current pen color
+ *    - gotoxy() move the pen to the desired coordinate
+ *    - printf() starts writing to the screen
+ *  The process continues...
+ */
+
+/* Note: for more information about colors you can go to Command Prompt and type "color h". Respective color code will come out.
+ * TODO: We'll make it easier next time. Don't worry.
+ * For now, just try and enjoy :D
+ */
+
+// Required variables for certain Windows function.
 COORD coord;
 HANDLE handle;
 
 // Each hotel will have...
-
 struct HOTEL
 {
 	char name[32];				// A hotel name, of course
@@ -30,6 +53,7 @@ struct HOTEL hotels[] = {
 	{"Wann Hotel", 3, 4, 115},
 	{"Kasanova Hotel", 5, 5, 210},
 	{"Vida Hotel", 6, 6, 400}
+  // And more here...
 };
 
 // String representation of the stars
@@ -54,6 +78,10 @@ char heart[7][12] = {
 	"\3 \3 \3 \3 \3 \3"
 };
 
+
+// =======  FUNCTION DECLARATION =======
+
+
 // Move cursor to the desired coordinate (x, y)
 // where (0, 0) is the top left corner
 // Like a graph paper, but with inverted y-axis
@@ -73,7 +101,7 @@ void setcolor(int color)
 
 // ==============================================================
 
- char c;
+char c;
 int i;
 
 
