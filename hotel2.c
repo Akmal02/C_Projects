@@ -23,9 +23,11 @@
  *    - gotoxy() move the pen to the desired coordinate
  *    - printf() starts writing to the screen
  *  The process continues...
+ *  "pen" here means the blinking cursor you see in the output. Nothing strange.
  */
 
-/* Note: for more information about colors you can go to Command Prompt and type "color h". Respective color code will come out.
+/* Note: for more information about colors you can go to Command Prompt 
+ * and type "color h". Respective color code will come out.
  * TODO: We'll make it easier next time. Don't worry.
  * For now, just try and enjoy :D
  */
@@ -85,6 +87,11 @@ char heart[7][12] = {
 // Move cursor to the desired coordinate (x, y)
 // where (0, 0) is the top left corner
 // Like a graph paper, but with inverted y-axis
+//   (0, 0)  *-----------------------------*  (20, 0)
+//           |                             |
+//           |                             |
+//           |                             |
+//   (0, 5)  *-----------------------------*  (20, 5)
 
 void gotoxy(int x, int y)
 {
