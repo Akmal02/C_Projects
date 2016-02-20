@@ -1,17 +1,18 @@
 /* 
  *     HOTEL RESERVATION SYSTEM
- *     © 2016
+ *     � 2016
  *
  */
- 
+
 #include <stdio.h>
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
 #include <shlwapi.h>
-#define ARROWR 26
-#define ARROWL 27
+
 #define BACKSPACE 8
+#define ENTER 13
+
 #define GREY 8
 #define BLUE 9
 #define GREEN 10
@@ -20,8 +21,10 @@
 #define PURPLE 13
 #define YELLOW 14
 #define WHITE 15
+
 #define HOTEL_MAX_SIZE 50
-	// String representation of the stars
+
+// String representation of the stars
 const char stars[7][12] = {
 	"           ",
 	"*          ",
@@ -117,7 +120,6 @@ void setcolor(int color)
 	SetConsoleTextAttribute(handle, color);
 }
 
-
 // Function to determine the day of week given date
 // Output will be an integer between 0 and 6
 // where 0 = Sunday, 1 = Monday, 2 = Tuesday ... 6 = Saturday
@@ -200,7 +202,9 @@ void print_tips(char *tips)
 void screen_home();
 void screen_login();
 void screen_find_hotel();
+void screen_filter();
 void screen_hotel_select(HOTEL hotel);
+void screen_booking_hotel();
 void screen_help();
 void screen_about();
 
@@ -252,7 +256,7 @@ void screen_home()
 
 
 		gotoxy(19, 6);
-		printf("%c   Press [Enter] to search", ARROWR);
+		printf("%c   Press [Enter] to search", 27);
 
 
 		print_tips("[H] Help     [A] About");
@@ -273,7 +277,7 @@ void screen_home()
 			screen_login();
 			break;
 
-		case '\r':				/* Find hotel */
+		case ENTER:			/* Find hotel */
 			show_searching();
 			screen_find_hotel();
 			break;
@@ -310,7 +314,7 @@ void show_searching()
 	print_search_box();
 
 	gotoxy(19, 6);
-	printf("%c   ", ARROWR);
+	printf("%c   ", 27);
 	scanf("%s", &srchtext);
 }
 
@@ -343,28 +347,42 @@ void screen_find_hotel()
 
 		int found = process_for_result(srchtext);
 
-		gotoxy(6, 12);
-		printf("      Name                 Star         Rating         Price\n");
-		printf("   -----------------------------------------------------------------------\n");
-
-		HOTEL hotel;
-		for (i = 0; i < found; i++)
+		if (found != 0)
 		{
-			hotel = hotel_search_results[i];
+			gotoxy(6, 12);
+			printf("      Name                 Star         Rating         Price\n");
+			printf("   -----------------------------------------------------------------------\n");
 
-			setcolor(GREY);
-			printf("      %2d", i + 1);
-			setcolor(0x0f);
-			printf("  %-15.15s", hotel.name);
-			setcolor(0x0e);
-			printf("     %s", stars[hotel.star]);
-			setcolor(0x0c);
-			printf("   %s", heart[(int)hotel.rating]);
-			setcolor(0x0f);
-			printf("   RM %4d.00\n", hotel.single_price);
+			HOTEL hotel;
+			for (i = 0; i < found; i++)
+			{
+				hotel = hotel_search_results[i];
+
+				setcolor(GREY);
+				printf("      %2d", i + 1);
+				setcolor(0x0f);
+				printf("  %-15.15s", hotel.name);
+				setcolor(0x0e);
+				printf("     %s", stars[hotel.star]);
+				setcolor(0x0c);
+				printf("   %s", heart[(int)hotel.rating]);
+				setcolor(0x0f);
+				printf("   RM %4d.00\n", hotel.single_price);
+			}
+
+			print_tips("Press a number to select the hotel, [F] to filter and sort result");
 		}
-
-		print_tips("Press a number to select the hotel");
+		else
+		{
+			setcolor(GREY);
+			gotoxy(0, 14);
+			printf("             ______          No hotel found.            \n");
+			printf("            | _  _ |          Too bad...                \n");
+			printf("            |      |                                    \n");
+			printf("            |  __  |                                    \n");
+			printf("            \\______/                                    \n");
+			print_tips("Press [Enter] to search again");
+		}
 
 		c = getch();
 
@@ -383,7 +401,7 @@ void screen_find_hotel()
 		case 'l':
 			screen_login();
 			break;
-		case '\r':
+		case ENTER:
 			show_searching();
 			break;
 		case BACKSPACE:
@@ -391,6 +409,13 @@ void screen_find_hotel()
 		}
 
 	}
+}
+
+void screen_filter()
+{
+
+
+
 }
 
 
@@ -432,21 +457,53 @@ void screen_hotel_select(HOTEL hotel)
 		if (hotel.star > 1)
 			printf("s");
 
-		gotoxy(55, 8);
+		gotoxy(54, 8);
 		setcolor(RED);
 		printf("%.1f  ", hotel.rating);
 		printf(heart[(int)hotel.rating]);
 
-		gotoxy(53, 10);
+		gotoxy(51, 10);
 		setcolor(PURPLE);
 		printf("   %5d reviews", hotel.hits);
 
+		setcolor(GREY);
+		gotoxy(0, 13);
+
+		printf("      |                                                                |\n");
+		printf("      |                                       |                        |\n");
+		printf("      |                                       |   from...              |\n");
+		printf("      |                                       |                        |\n");
+		printf("      |                                       |                        |\n");
+		printf("      |                                       |                        |\n");
+		printf("      |                                       |           per night    |\n");
+		printf("      |                                       |                        |\n");
+		printf("      |                                       |                        |\n");
+		printf("      |                                       |                        |\n");
+		printf("      |                                       |                        |\n");
+		printf("      |                                                                |\n");
+		printf("      +----------------------------------------------------------------+\n");
+
+		setcolor(WHITE);
+		gotoxy(52, 17);
+		printf(" RM %3d.00", hotel.single_price);
+
+		setcolor(GREEN);
+		gotoxy(50, 22);
+		printf("  Press [Enter]  ");
+		gotoxy(50, 23);
+		printf("  to proceed    >>");
+
+
+		print_tips("Press [Backspace] to cancel");
 		c = getch();
 
 		switch (c)
 		{
 		case 'l':
 			screen_login();
+			break;
+		case ENTER:
+			screen_booking_hotel();
 			break;
 		case BACKSPACE:
 			return;
@@ -477,6 +534,18 @@ int process_for_result(char *srchtext)
 	return found;
 }
 
+void screen_booking_hotel()
+{
+	while (1)
+	{
+		system("cls");
+		print_title_bar();
+
+		getch();
+		break;
+	}
+}
+
 void screen_help()
 {
 
@@ -489,4 +558,4 @@ void screen_about()
 }
 
 
-/* ===== END OF FILE hotel2.c ===== */
+/* ===== END OF FILE hotel2.c ===== */ 
