@@ -1,6 +1,6 @@
 # C Projects
 A collection of small C programs built for Windows.
-Created during university project
+Created during my C programming university course.
 
 Included are...
 
